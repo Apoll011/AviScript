@@ -1,0 +1,8 @@
+[package]
+name = "AviScript"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rhai = { version = "*", features = [ "metadata", "debugging", "decimal", "serde" ] }
+uuid = { version = "*", features = ["v4"] }
