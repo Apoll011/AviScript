@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rhai = { version = "*", features = [ "metadata", "debugging", "decimal", "serde" ] }
+rhai = { version = "*", features = ["debugging", "decimal", "serde" ] }
 uuid = { version = "*", features = ["v4"] }
+rhai-fs = "*"
+rhai-url = "*"

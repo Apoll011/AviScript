@@ -1,7 +1,3 @@
-Absolutely! Here's a clean, modern **file and folder structure** for a voice assistant **skill project** designed to work with `.avi` DSL scripting and integrate with Rhai. This layout includes **intents**, **responses**, **config**, **metadata**, **assets**, and optional programmatic extensions.
-
----
-
 ## 📁 `my_skill/` – Root of the Skill
 The entire skill lives here.
 
@@ -13,8 +9,8 @@ my_skill/
 │   ├── default.json           # Default config structure and values
 │   └── runtime.json           # User-edited or stored config
 ├── intents/
-│   ├── main.intent       # Intent definition for main activation
-│   └── other.intent      # Additional intents
+│   ├── intent1.intent       # Intent definition for main activation
+│   └── intent2.intent      # Additional intents
 ├── responses/
 │   ├── en.lang                # English responses
 │   ├── es.lang                # Spanish responses
@@ -31,7 +27,7 @@ my_skill/
 ├── extensions/
 │   └── custom.rs              # Optional Rust extensions for heavy lifting
 ├── tests/
-│   └── skill_test.avi         # Tests in the DSL or JSON test format
+│   └── skill_test.avi         # Tests
 └── README.md                  # Human-readable doc for this skill
 ```
 
@@ -85,25 +81,13 @@ license = "MIT"
 
 Each file defines an intent and its slot structure.
 
-```json
-{
-  "intent_name": "greet_user",
-  "slots": {
-    "user_name": {
-      "type": "text",
-      "required": false
-    }
-  }
-}
-```
-
 ---
 
 ### 🔈 `responses/en.lang`
 
 Language responses mapped to keys.
 
-```plantuml
+```
 hello_message:Hello there, {user_name}!
 ask_name:What is your name?
 bye: Goodbye!
@@ -141,20 +125,4 @@ Explain purpose, usage, or slot examples.
 
 ---
 
-## 📦 Optional: Compiled/Published Format
-
-After packaging, your skill might look like this:
-
-```
-greet.skill/
-├── compiled.rhai (or compiled.avi)
-├── metadata.avi
-├── responses/
-├── assets/
-├── config/
-└── ...
-```
-
----
-
-Would you like a generator script or template project for this structure too?
+And they can be compiled
