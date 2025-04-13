@@ -1,0 +1,124 @@
+// AviScript Grammar Definition
+
+// Top-level structure
+Program       ::= (Statement | FunctionDef | EventHandler)*
+
+// Function definition
+FunctionDef   ::= 'fn' Identifier '(' [ParamList] ')' Block
+
+// Event handlers
+EventHandler  ::= 'on_intent' StringLiteral ['|' Identifier '|'] Block
+                | 'on_event' StringLiteral ['|' Identifier '|'] Block
+                | 'on_start' Block
+                | 'on_end' Block
+
+// Parameter list
+ParamList     ::= Identifier (',' Identifier)*
+
+// Block structure
+Block         ::= '{' Statement* '}'
+
+// Statements
+Statement     ::= VarDecl ';'
+                | Assignment ';'
+                | FunctionCall ';'
+                | IfStatement
+                | WhileLoop
+                | ForLoop
+                | ReturnStmt ';'
+                | Block
+
+// Variable declaration
+VarDecl       ::= 'let' Identifier ['=' Expression]
+
+// Assignment
+Assignment    ::= LValue '=' Expression
+
+// LValue (left side of assignment)
+LValue        ::= Identifier
+                | LValue '.' Identifier
+                | LValue '[' Expression ']'
+
+// If statement with optional else
+IfStatement   ::= 'if' Expression Block ['else' (IfStatement | Block)]
+
+// Loops
+WhileLoop     ::= 'while' Expression Block
+ForLoop       ::= 'for' Identifier 'in' Expression Block
+
+// Return statement
+ReturnStmt    ::= 'return' [Expression]
+
+// Function call
+FunctionCall  ::= (Identifier | ModuleAccess) '(' [ArgList] ')'
+ModuleAccess  ::= Identifier '.' Identifier
+
+// Argument list
+ArgList       ::= Expression (',' Expression)*
+
+// Expression
+Expression    ::= LogicalOr
+                | ConditionalExpr
+                | FunctionCall
+                | LambdaExpr
+
+// Conditional expression (ternary)
+ConditionalExpr ::= Expression '?' Expression ':' Expression
+
+// Logical or - custom 'or' operator
+LogicalOr     ::= LogicalAnd ('or' LogicalAnd)*
+
+// Logical and
+LogicalAnd    ::= Equality ('&&' Equality)*
+
+// Equality
+Equality      ::= Comparison (('==' | '!=') Comparison)*
+
+// Comparison
+Comparison    ::= Addition (('<' | '>' | '<=' | '>=') Addition)*
+
+// Addition / subtraction
+Addition      ::= Multiplication (('+' | '-' | '@@') Multiplication)*
+
+// Multiplication / division
+Multiplication ::= Unary (('*' | '/' | '%') Unary)*
+
+// Unary operators
+Unary         ::= ('!' | '-') Unary
+                | Primary
+
+// Primary expressions
+Primary       ::= Identifier
+                | Literal
+                | '(' Expression ')'
+                | ArrayLiteral
+                | MapLiteral
+                | ModuleAccess
+
+// Lambda expression
+LambdaExpr    ::= '|' [ParamList] '|' (Expression | Block)
+
+// Literals
+Literal       ::= NumberLiteral
+                | StringLiteral
+                | BooleanLiteral
+                | NullLiteral
+
+// Array literal
+ArrayLiteral  ::= '[' [Expression (',' Expression)*] ']'
+
+// Map literal
+MapLiteral    ::= '#{' [MapEntry (',' MapEntry)*] '}'
+MapEntry      ::= StringLiteral ':' Expression
+
+// Core literals
+NumberLiteral  ::= [0-9]+ ('.' [0-9]+)?
+StringLiteral  ::= '"' [^"]* '"' | "'" [^']* "'"
+BooleanLiteral ::= 'true' | 'false'
+NullLiteral    ::= 'null'
+
+// Identifier
+Identifier     ::= [a-zA-Z_][a-zA-Z0-9_]*
+
+// Comments
+Comment        ::= '//' [^\n]* | '/*' .* '*/'
